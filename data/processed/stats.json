@@ -1,0 +1,57 @@
+{
+  "num_triples": 250,
+  "num_entities": 260,
+  "num_relations": 16,
+  "sample_triples": [
+    [
+      "Salona",
+      "koordinate",
+      "Point(16.483055555_43.539444444)"
+    ],
+    [
+      "Vis",
+      "drzava",
+      "Hrvatska"
+    ],
+    [
+      "Slobodna_Drzava_Rijeka",
+      "koordinate",
+      "Point(14.4429_45.3531)"
+    ],
+    [
+      "Zadar",
+      "nalazi_se_u",
+      "Zadarska_zupanija"
+    ],
+    [
+      "Novalja",
+      "nalazi_se_u",
+      "Licko-senjska_zupanija"
+    ],
+    [
+      "Zadar",
+      "koordinate",
+      "Point(15.2355_44.117)"
+    ],
+    [
+      "Vodnjan",
+      "nalazi_se_u",
+      "Istarska_zupanija"
+    ],
+    [
+      "Supetar",
+      "broj_stanovnika",
+      "4325"
+    ],
+    [
+      "Fulfinum",
+      "drzava",
+      "Hrvatska"
+    ],
+    [
+      "Supetar",
+      "postanski_broj",
+      "21400"
+    ]
+  ]
+}

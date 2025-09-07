@@ -1,0 +1,18 @@
+{
+  "arhitekt": 0,
+  "arhitektonski_stil": 1,
+  "bracni_partner": 2,
+  "broj_stanovnika": 3,
+  "datum_rodjenja": 4,
+  "drzava": 5,
+  "drzavljanstvo": 6,
+  "koordinate": 7,
+  "mjesto_rodjenja": 8,
+  "mjesto_smrti": 9,
+  "nalazi_se_u": 10,
+  "obrazovanje": 11,
+  "osnovan": 12,
+  "postanski_broj": 13,
+  "sluzbeni_jezik": 14,
+  "zanimanje": 15
+}
