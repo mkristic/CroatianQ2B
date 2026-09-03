@@ -62,7 +62,7 @@ def graph_lookup_answer(qtype, e1, r1, e2, r2):
         if not e1 or not r1:
             return None, "Unesite entitet i relaciju za 1p upit."
         answers = generator.objects.get((e1, r1), set())
-        nl = f"Koji je entitet povezan s '{to_display(e1)}' relacijom '{to_display(r1)}'?"
+        nl = f"Koji je entitet povezan s entitetom '{to_display(e1)}' relacijom '{to_display(r1)}'?"
 
     elif qtype == "2p":
         if not e1 or not r1 or not r2:
@@ -184,7 +184,7 @@ with gr.Blocks(title="Croatian Query2Box", css=css, theme=theme) as demo:
     relation_choices = [(r.replace("_", " "), r) for r in sorted(relation2id.keys())] # za dropdown selection
 
     with gr.Row(elem_classes="input-row"):
-        e1 = gr.Textbox(label="Entitet 1 (sidro za 1p/2p, vrijednost svojstva za 2i)", elem_classes="input-field")
+        e1 = gr.Textbox(label="Entitet 1 (sidrena vrijednost za 1p/2p)", elem_classes="input-field")
         r1 = gr.Dropdown(label="Relacija 1", choices=relation_choices, value=None, elem_classes="input-field")
 
     with gr.Row(elem_classes="input-row"):
@@ -214,8 +214,11 @@ with gr.Blocks(title="Croatian Query2Box", css=css, theme=theme) as demo:
     )
 
     gr.Markdown(
-        "Napomena: nazivi entiteta/relacija moraju odgovarati onima u croatian_triples.txt (bez dijakritika, razmak -> underscore). "
-        "\nPrimjer 1p upita: Entitet 1 = 'Zagreb', Relacija 1 = 'postanski_broj'."
+        "Napomena:  " \
+        "\nNazivi entiteta/relacija moraju odgovarati onima u croatian_triples.txt (bez dijakritika, razmak -> underscore).  " \
+        "\nPrimjer 1p upita: Entitet 1 = 'Zagreb', Relacija 1 = 'postanski_broj'.  "
+        "\nPrimjer 2p upita: Entitet 1 = 'Stjepan_Mesic', Relacija 1 = 'mjesto rodjenja', Relacija 2 = 'postanski broj'.  "
+        "\nPrimjer 2i upita: (Entitet 1 = 'pisac' = Relacija 1 = 'zanimanje') I (Entitet 2 = 'novinar' = Relacija 2 = 'zanimanje')."
     )
 
 if __name__ == "__main__":
