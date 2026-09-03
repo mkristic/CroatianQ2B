@@ -7,6 +7,7 @@ import sys
 import json
 import torch
 import gradio as gr
+from datetime import datetime, date
 
 # import iz src/data_processing i src/models bez pretvaranja u paket
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data_processing"))
@@ -39,10 +40,17 @@ model = BoxEmbedding(
 model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
 model.eval()
 
-# umjesto underscore prikazat ce se razmak
-def to_display(name: str) -> str:
-    return name.replace("_", " ") if name else name
-
+# formatiranje stringova za ispis
+# - ako se radi o datumu: vratit ce dd. mm. yyyy. umjesto generickog datetime formata
+# - ako je viseclani naziv razdvojen underscoreom (definirano s clean_name() u croatian_kg_processor.py), umjesto underscore ispisuje razmak
+def to_display(value):
+    if isinstance(value, str) and value:
+            try:
+                date = datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ")
+                return date.strftime("%d. %m. %Y.")
+            except ValueError:
+                return value.replace("_", " ")
+    return value
 
 ###############################################################################################################################
 # odgovor direktnom pretragom grafa (bazna linija) - vidi prijasnju verziju
