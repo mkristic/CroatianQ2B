@@ -1,0 +1,1031 @@
+{
+  "1p": [
+    {
+      "query": [
+        "1p",
+        [
+          "Zagreb",
+          [
+            "postanski_broj"
+          ]
+        ]
+      ],
+      "answers": [
+        "10000"
+      ]
+    },
+    {
+      "query": [
+        "1p",
+        [
+          "Sveti_Jure",
+          [
+            "drzava"
+          ]
+        ]
+      ],
+      "answers": [
+        "Hrvatska"
+      ]
+    },
+    {
+      "query": [
+        "1p",
+        [
+          "Vuka",
+          [
+            "drzava"
+          ]
+        ]
+      ],
+      "answers": [
+        "Hrvatska"
+      ]
+    },
+    {
+      "query": [
+        "1p",
+        [
+          "Brac",
+          [
+            "povrsina"
+          ]
+        ]
+      ],
+      "answers": [
+        "396"
+      ]
+    },
+    {
+      "query": [
+        "1p",
+        [
+          "Pazin",
+          [
+            "postanski_broj"
+          ]
+        ]
+      ],
+      "answers": [
+        "52000"
+      ]
+    },
+    {
+      "query": [
+        "1p",
+        [
+          "Biochemia_medica",
+          [
+            "tema"
+          ]
+        ]
+      ],
+      "answers": [
+        "biokemija"
+      ]
+    },
+    {
+      "query": [
+        "1p",
+        [
+          "Institut_za_hrvatski_jezik",
+          [
+            "drzava"
+          ]
+        ]
+      ],
+      "answers": [
+        "Hrvatska"
+      ]
+    },
+    {
+      "query": [
+        "1p",
+        [
+          "Dinara",
+          [
+            "gorje"
+          ]
+        ]
+      ],
+      "answers": [
+        "Dinara"
+      ]
+    },
+    {
+      "query": [
+        "1p",
+        [
+          "Hvar",
+          [
+            "povrsina"
+          ]
+        ]
+      ],
+      "answers": [
+        "297.37"
+      ]
+    },
+    {
+      "query": [
+        "1p",
+        [
+          "UrbanFestival",
+          [
+            "drzava"
+          ]
+        ]
+      ],
+      "answers": [
+        "Hrvatska"
+      ]
+    },
+    {
+      "query": [
+        "1p",
+        [
+          "Solta",
+          [
+            "povrsina"
+          ]
+        ]
+      ],
+      "answers": [
+        "59.2"
+      ]
+    },
+    {
+      "query": [
+        "1p",
+        [
+          "Institut_Ruder_Boskovic",
+          [
+            "drzava"
+          ]
+        ]
+      ],
+      "answers": [
+        "Hrvatska"
+      ]
+    },
+    {
+      "query": [
+        "1p",
+        [
+          "Snijeznica_Konavoska",
+          [
+            "drzava"
+          ]
+        ]
+      ],
+      "answers": [
+        "Hrvatska"
+      ]
+    },
+    {
+      "query": [
+        "1p",
+        [
+          "Rijeka",
+          [
+            "broj_stanovnika"
+          ]
+        ]
+      ],
+      "answers": [
+        "107964"
+      ]
+    },
+    {
+      "query": [
+        "1p",
+        [
+          "Medijska_istrazivanja",
+          [
+            "tema"
+          ]
+        ]
+      ],
+      "answers": [
+        "masovni_mediji"
+      ]
+    },
+    {
+      "query": [
+        "1p",
+        [
+          "Prolegomena",
+          [
+            "izdavac"
+          ]
+        ]
+      ],
+      "answers": [
+        "Society_for_the_Advancement_of_Philosophy"
+      ]
+    },
+    {
+      "query": [
+        "1p",
+        [
+          "Tounjcica",
+          [
+            "drzava"
+          ]
+        ]
+      ],
+      "answers": [
+        "Hrvatska"
+      ]
+    },
+    {
+      "query": [
+        "1p",
+        [
+          "Pricigin",
+          [
+            "drzava"
+          ]
+        ]
+      ],
+      "answers": [
+        "Hrvatska"
+      ]
+    },
+    {
+      "query": [
+        "1p",
+        [
+          "Filozofska_istrazivanja",
+          [
+            "tema"
+          ]
+        ]
+      ],
+      "answers": [
+        "filozofija"
+      ]
+    },
+    {
+      "query": [
+        "1p",
+        [
+          "Buje",
+          [
+            "postanski_broj"
+          ]
+        ]
+      ],
+      "answers": [
+        "52460"
+      ]
+    }
+  ],
+  "2p": [
+    {
+      "query": [
+        "2p",
+        [
+          "Tomislav_Erceg",
+          [
+            "mjesto_rodjenja",
+            "koordinate"
+          ]
+        ]
+      ],
+      "answers": [
+        "Point(16.44_43.51)"
+      ]
+    },
+    {
+      "query": [
+        "2p",
+        [
+          "Tjedan_suvremenog_plesa",
+          [
+            "nalazi_se_u",
+            "nalazi_se_u"
+          ]
+        ]
+      ],
+      "answers": [
+        "Hrvatska"
+      ]
+    },
+    {
+      "query": [
+        "2p",
+        [
+          "Stjepan_Mesic",
+          [
+            "mjesto_rodjenja",
+            "postanski_broj"
+          ]
+        ]
+      ],
+      "answers": [
+        "33515"
+      ]
+    },
+    {
+      "query": [
+        "2p",
+        [
+          "Zdenko_Uzorinac",
+          [
+            "mjesto_rodjenja",
+            "drzava"
+          ]
+        ]
+      ],
+      "answers": [
+        "Hrvatska"
+      ]
+    },
+    {
+      "query": [
+        "2p",
+        [
+          "Dinara",
+          [
+            "gorje",
+            "drzava"
+          ]
+        ]
+      ],
+      "answers": [
+        "Hrvatska"
+      ]
+    },
+    {
+      "query": [
+        "2p",
+        [
+          "Sloboda_stvaralastvu!",
+          [
+            "nalazi_se_u",
+            "nalazi_se_u"
+          ]
+        ]
+      ],
+      "answers": [
+        "Hrvatska"
+      ]
+    },
+    {
+      "query": [
+        "2p",
+        [
+          "Issa",
+          [
+            "nalazi_se_u",
+            "koordinate"
+          ]
+        ]
+      ],
+      "answers": [
+        "Point(16.1525_43.0425)",
+        "Point(16.15_43.033333)"
+      ]
+    },
+    {
+      "query": [
+        "2p",
+        [
+          "Salona",
+          [
+            "nalazi_se_u",
+            "koordinate"
+          ]
+        ]
+      ],
+      "answers": [
+        "Point(16.494722222_43.531666666)"
+      ]
+    },
+    {
+      "query": [
+        "2p",
+        [
+          "Pricigin",
+          [
+            "nalazi_se_u",
+            "drzava"
+          ]
+        ]
+      ],
+      "answers": [
+        "Hrvatska"
+      ]
+    },
+    {
+      "query": [
+        "2p",
+        [
+          "Sveta_Cecilija",
+          [
+            "izdavac",
+            "drzava"
+          ]
+        ]
+      ],
+      "answers": [
+        "Hrvatska"
+      ]
+    },
+    {
+      "query": [
+        "2p",
+        [
+          "Cirkobalkana",
+          [
+            "nalazi_se_u",
+            "nalazi_se_u"
+          ]
+        ]
+      ],
+      "answers": [
+        "Hrvatska"
+      ]
+    },
+    {
+      "query": [
+        "2p",
+        [
+          "Arboretum_Trsteno",
+          [
+            "nalazi_se_u",
+            "koordinate"
+          ]
+        ]
+      ],
+      "answers": [
+        "Point(18.108333333_42.640277777)"
+      ]
+    },
+    {
+      "query": [
+        "2p",
+        [
+          "Hvar",
+          [
+            "najvisa_tocka",
+            "drzava"
+          ]
+        ]
+      ],
+      "answers": [
+        "Hrvatska"
+      ]
+    },
+    {
+      "query": [
+        "2p",
+        [
+          "Sveuciliste_u_Zagrebu",
+          [
+            "sluzbeni_naziv",
+            "nalazi_se_u"
+          ]
+        ]
+      ],
+      "answers": [
+        "Zagreb"
+      ]
+    },
+    {
+      "query": [
+        "2p",
+        [
+          "UrbanFestival",
+          [
+            "nalazi_se_u",
+            "drzava"
+          ]
+        ]
+      ],
+      "answers": [
+        "Hrvatska"
+      ]
+    },
+    {
+      "query": [
+        "2p",
+        [
+          "Sandra_Elkasevic",
+          [
+            "mjesto_rodjenja",
+            "drzava"
+          ]
+        ]
+      ],
+      "answers": [
+        "Hrvatska"
+      ]
+    },
+    {
+      "query": [
+        "2p",
+        [
+          "Veleuciliste_VERN'",
+          [
+            "sjediste",
+            "datum_osnivanja"
+          ]
+        ]
+      ],
+      "answers": [
+        "1094-01-01T00:00:00Z"
+      ]
+    },
+    {
+      "query": [
+        "2p",
+        [
+          "Sveuciliste_Jurja_Dobrile_u_Puli",
+          [
+            "sluzbeni_naziv",
+            "sjediste"
+          ]
+        ]
+      ],
+      "answers": [
+        "Pula"
+      ]
+    },
+    {
+      "query": [
+        "2p",
+        [
+          "Stjepan_Mesic",
+          [
+            "obrazovanje",
+            "drzava"
+          ]
+        ]
+      ],
+      "answers": [
+        "Hrvatska"
+      ]
+    },
+    {
+      "query": [
+        "2p",
+        [
+          "Zdeslav",
+          [
+            "mjesto_smrti",
+            "nalazi_se_u"
+          ]
+        ]
+      ],
+      "answers": [
+        "Sibensko-kninska_zupanija"
+      ]
+    }
+  ],
+  "2i": [
+    {
+      "query": [
+        "2i",
+        [
+          [
+            "Zacharovanyi_Krai_-_Velykyi_Dil",
+            [
+              "sastoji_se_od"
+            ]
+          ],
+          [
+            "Djendema",
+            [
+              "sastoji_se_od"
+            ]
+          ]
+        ]
+      ],
+      "answers": [
+        "Karpatske_i_njemacke_prasume_bukve"
+      ]
+    },
+    {
+      "query": [
+        "2i",
+        [
+          [
+            "Steneto_Biosphere_Reserve",
+            [
+              "sastoji_se_od"
+            ]
+          ],
+          [
+            "Monte_Raschio_-_Foreste_di_faggi_antiche_e_primarie",
+            [
+              "sastoji_se_od"
+            ]
+          ]
+        ]
+      ],
+      "answers": [
+        "Karpatske_i_njemacke_prasume_bukve"
+      ]
+    },
+    {
+      "query": [
+        "2i",
+        [
+          [
+            "pisac",
+            [
+              "zanimanje"
+            ]
+          ],
+          [
+            "novinar",
+            [
+              "zanimanje"
+            ]
+          ]
+        ]
+      ],
+      "answers": [
+        "Zdenko_Uzorinac"
+      ]
+    },
+    {
+      "query": [
+        "2i",
+        [
+          [
+            "Hrvatska",
+            [
+              "drzava"
+            ]
+          ],
+          [
+            "1948-01-01T00:00:00Z",
+            [
+              "datum_osnivanja"
+            ]
+          ]
+        ]
+      ],
+      "answers": [
+        "Arboretum_Trsteno",
+        "Institut_za_hrvatski_jezik"
+      ]
+    },
+    {
+      "query": [
+        "2i",
+        [
+          [
+            "107964",
+            [
+              "broj_stanovnika"
+            ]
+          ],
+          [
+            "Point(14.433333333_45.333333333)",
+            [
+              "koordinate"
+            ]
+          ]
+        ]
+      ],
+      "answers": [
+        "Rijeka"
+      ]
+    },
+    {
+      "query": [
+        "2i",
+        [
+          [
+            "Svydovets_protected_massif",
+            [
+              "sastoji_se_od"
+            ]
+          ],
+          [
+            "Hayedos_de_Picos_de_Europa_-_Canal_de_Asotin",
+            [
+              "sastoji_se_od"
+            ]
+          ]
+        ]
+      ],
+      "answers": [
+        "Karpatske_i_njemacke_prasume_bukve"
+      ]
+    },
+    {
+      "query": [
+        "2i",
+        [
+          [
+            "povijest",
+            [
+              "tema"
+            ]
+          ],
+          [
+            "Hrvatski_institut_za_povijest",
+            [
+              "izdavac"
+            ]
+          ]
+        ]
+      ],
+      "answers": [
+        "Casopis_za_suvremenu_povijest",
+        "Povijesni_prilozi"
+      ]
+    },
+    {
+      "query": [
+        "2i",
+        [
+          [
+            "Lotrișor",
+            [
+              "sastoji_se_od"
+            ]
+          ],
+          [
+            "Cheile_Nerei-Beușnița",
+            [
+              "sastoji_se_od"
+            ]
+          ]
+        ]
+      ],
+      "answers": [
+        "Karpatske_i_njemacke_prasume_bukve"
+      ]
+    },
+    {
+      "query": [
+        "2i",
+        [
+          [
+            "Kalkalpen_-_Wilder_Graben",
+            [
+              "sastoji_se_od"
+            ]
+          ],
+          [
+            "Q4281073",
+            [
+              "sastoji_se_od"
+            ]
+          ]
+        ]
+      ],
+      "answers": [
+        "Karpatske_i_njemacke_prasume_bukve"
+      ]
+    },
+    {
+      "query": [
+        "2i",
+        [
+          [
+            "Kvarner",
+            [
+              "nalazi_se_u"
+            ]
+          ],
+          [
+            "405.78",
+            [
+              "povrsina"
+            ]
+          ]
+        ]
+      ],
+      "answers": [
+        "Cres"
+      ]
+    },
+    {
+      "query": [
+        "2i",
+        [
+          [
+            "Sokolna",
+            [
+              "sastoji_se_od"
+            ]
+          ],
+          [
+            "Sataniv_Nature_Reserve",
+            [
+              "sastoji_se_od"
+            ]
+          ]
+        ]
+      ],
+      "answers": [
+        "Karpatske_i_njemacke_prasume_bukve"
+      ]
+    },
+    {
+      "query": [
+        "2i",
+        [
+          [
+            "Cheile_Nerei-Beușnița",
+            [
+              "sastoji_se_od"
+            ]
+          ],
+          [
+            "Tsaritchina_Biosphere_Reserve",
+            [
+              "sastoji_se_od"
+            ]
+          ]
+        ]
+      ],
+      "answers": [
+        "Karpatske_i_njemacke_prasume_bukve"
+      ]
+    },
+    {
+      "query": [
+        "2i",
+        [
+          [
+            "Sosice",
+            [
+              "mjesto_rodjenja"
+            ]
+          ],
+          [
+            "Hrvatska",
+            [
+              "drzavljanstvo"
+            ]
+          ]
+        ]
+      ],
+      "answers": [
+        "Dragica_Martinis"
+      ]
+    },
+    {
+      "query": [
+        "2i",
+        [
+          [
+            "Djendema",
+            [
+              "sastoji_se_od"
+            ]
+          ],
+          [
+            "Svydovets_protected_massif",
+            [
+              "sastoji_se_od"
+            ]
+          ]
+        ]
+      ],
+      "answers": [
+        "Karpatske_i_njemacke_prasume_bukve"
+      ]
+    },
+    {
+      "query": [
+        "2i",
+        [
+          [
+            "primeval_beech_forest_of_Rrajcë",
+            [
+              "sastoji_se_od"
+            ]
+          ],
+          [
+            "Valle_Cervara",
+            [
+              "sastoji_se_od"
+            ]
+          ]
+        ]
+      ],
+      "answers": [
+        "Karpatske_i_njemacke_prasume_bukve"
+      ]
+    },
+    {
+      "query": [
+        "2i",
+        [
+          [
+            "Sonian_Forest_–_Grippensdelle_A",
+            [
+              "sastoji_se_od"
+            ]
+          ],
+          [
+            "Monte_Raschio_-_Foreste_di_faggi_antiche_e_primarie",
+            [
+              "sastoji_se_od"
+            ]
+          ]
+        ]
+      ],
+      "answers": [
+        "Karpatske_i_njemacke_prasume_bukve"
+      ]
+    },
+    {
+      "query": [
+        "2i",
+        [
+          [
+            "1968-01-11T00:00:00Z",
+            [
+              "datum_rodjenja"
+            ]
+          ],
+          [
+            "Jugoslavija",
+            [
+              "drzavljanstvo"
+            ]
+          ]
+        ]
+      ],
+      "answers": [
+        "Emilio_Kovacic"
+      ]
+    },
+    {
+      "query": [
+        "2i",
+        [
+          [
+            "Sveuciliste_Jurja_Dobrile_u_Puli",
+            [
+              "sluzbeni_naziv"
+            ]
+          ],
+          [
+            "Hrvatska",
+            [
+              "drzava"
+            ]
+          ]
+        ]
+      ],
+      "answers": [
+        "Sveuciliste_Jurja_Dobrile_u_Puli"
+      ]
+    },
+    {
+      "query": [
+        "2i",
+        [
+          [
+            "Valle_Cervara",
+            [
+              "sastoji_se_od"
+            ]
+          ],
+          [
+            "Groșii_Țibleșului_-_Preluci",
+            [
+              "sastoji_se_od"
+            ]
+          ]
+        ]
+      ],
+      "answers": [
+        "Karpatske_i_njemacke_prasume_bukve"
+      ]
+    },
+    {
+      "query": [
+        "2i",
+        [
+          [
+            "Gorgany_Nature_Reserve",
+            [
+              "sastoji_se_od"
+            ]
+          ],
+          [
+            "Krokar_forest_reserve",
+            [
+              "sastoji_se_od"
+            ]
+          ]
+        ]
+      ],
+      "answers": [
+        "Karpatske_i_njemacke_prasume_bukve"
+      ]
+    }
+  ]
+}

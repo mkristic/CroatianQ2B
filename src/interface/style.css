@@ -1,0 +1,59 @@
+.gradio-container {
+        --block-title-text-color: #6B7A52 !important;
+        --block-title-background-fill: #E8F0E4 !important;
+        --checkbox-background-color-selected: #636F3A !important;
+        --checkbox-border-color-selected: #636F3A !important;
+    }
+     .gradio-container label.selected {
+        background: #7C8B4A !important;
+        color: white !important;
+        border-color: #636F3A !important;
+    }     
+    .my-button, .my-button button {
+        width: 180px !important;
+        min-width: 180px !important;
+        flex-grow: 0 !important;
+        white-space: nowrap !important;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        background-color: #7C8B4A  !important;
+        border: none !important;
+        color: white !important;
+    }
+    .my-button:hover, .my-button:hover button {
+        background-color: #636F3A  !important;
+    }
+    #button-row {
+        justify-content: space-around !important;        
+    }
+    #main-title, h1 {
+        color: #7C8B4A !important;
+        font-size: 2.5rem !important;
+        text-align: center
+    }  
+    #title-separator {
+        margin-top: 10px;
+        margin-bottom: 10px
+    }   
+    .input-field {
+        border: 1px solid #A8CBB7 !important;
+        border-radius: 8px !important;
+        overflow: hidden;
+        margin-left: 3px;
+        margin-right: 3px
+    }
+    .input-field textarea,
+    .input-field input,
+    .input-field select,
+    .input-field > div {
+        border: none !important;
+        background: transparent !important;
+    }
+    .input-row  {
+        background: #F4FAF6  !important;
+    }
+    .input-row .form {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}

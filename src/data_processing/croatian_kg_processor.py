@@ -13,11 +13,14 @@ import logging
 import time
 import unicodedata
 import os
+import shutil
+from datetime import datetime
 
 class CroatianKGProcessor:
     def __init__(self):
         self.triples = []
         self.entities = set()
+        self.entity_types = {}
         self.relations = set()
         self.entity2id = {}
         self.relation2id = {}
@@ -28,6 +31,22 @@ class CroatianKGProcessor:
         # setup logging - za pracenje tijeka programa i errora
         logging.basicConfig(level=logging.INFO)
         self.logger = logging.getLogger(__name__)
+
+    # Wikidata nekad vraca gresku 429 (too many requests) ako je preopterecena ili trenutno ne radi
+    # ova funkcija ce napraviti retry poziva dok ne dobije odgovor kako bi izbjegla vracanje errora pri pozivu u slucaju da je Wikidata preopterecena / ne radi
+    def _query_with_retry(self, sparql: SPARQLWrapper, max_retries: int = 2, wait_seconds: int = 180):
+        for attempt in range(max_retries + 1):
+            try:
+                return sparql.query().convert()
+            except Exception as e:
+                if "429" in str(e) and attempt < max_retries:
+                    self.logger.warning(
+                        f"Wikidata rate-limit (429), cekam {wait_seconds}s prije ponovnog "
+                        f"pokusaja ({attempt + 1}/{max_retries})..."
+                    )
+                    time.sleep(wait_seconds)
+                else:
+                    raise
     
     ###############################################################################################################################
     
@@ -82,7 +101,7 @@ class CroatianKGProcessor:
         
         # ako dode do greske, except vraca []
         try:
-            results = sparql.query().convert()
+            results = self._query_with_retry(sparql)
             
             # dohvacanje vrijednosti varijabli
             for result in results["results"]["bindings"]:
@@ -97,6 +116,7 @@ class CroatianKGProcessor:
                 # stvaranje RDF trojki
                 self.triples.append((grad, svojstvo, vrijednost))
                 self.entities.add(grad)
+                self.entity_types[grad] = "grad"
                 self.entities.add(vrijednost)
                 self.relations.add(svojstvo)
                 
@@ -154,7 +174,7 @@ class CroatianKGProcessor:
             # Wikidata ima limit koliko upita u sekundi moze primiti
             # time.sleep() napravi pauzu da se Wikidata ne preoptereti upitima i da ne dode do gresaka/crashanja
             time.sleep(1)  
-            results = sparql.query().convert()
+            results = self._query_with_retry(sparql)
             
             # dohvacanje vrijednosti varijabli
             for result in results["results"]["bindings"]:
@@ -169,6 +189,7 @@ class CroatianKGProcessor:
                 # stvaranje RDF trojki
                 self.triples.append((osoba, svojstvo, vrijednost))
                 self.entities.add(osoba)
+                self.entity_types[osoba] = "osoba"
                 self.entities.add(vrijednost)
                 self.relations.add(svojstvo)
                 
@@ -232,7 +253,7 @@ class CroatianKGProcessor:
             # Wikidata ima limit koliko upita u sekundi moze primiti
             # time.sleep() napravi pauzu da se Wikidata ne preoptereti upitima i da ne dode do gresaka/crashanja
             time.sleep(1)
-            results = sparql.query().convert()
+            results = self._query_with_retry(sparql)
             
             # dohvacanje vrijednosti varijabli
             for result in results["results"]["bindings"]:
@@ -247,6 +268,7 @@ class CroatianKGProcessor:
                 # stvaranje RDF trojki
                 self.triples.append((znamenitost, svojstvo, vrijednost))
                 self.entities.add(znamenitost)
+                self.entity_types[znamenitost] = "znamenitost"
                 self.entities.add(vrijednost)
                 self.relations.add(svojstvo)
                 
@@ -302,7 +324,7 @@ class CroatianKGProcessor:
         # ako dode do greske, except vraca []
         try:
             time.sleep(1)
-            results = sparql.query().convert()
+            results = self._query_with_retry(sparql)
             
             # dohvacanje vrijednosti varijabli
             for result in results["results"]["bindings"]:
@@ -317,6 +339,7 @@ class CroatianKGProcessor:
                 # stvaranje RDF trojki
                 self.triples.append((sveuciliste, svojstvo, vrijednost))
                 self.entities.add(sveuciliste)
+                self.entity_types[sveuciliste] = "sveuciliste"
                 self.entities.add(vrijednost)
                 self.relations.add(svojstvo)
                 
@@ -372,7 +395,7 @@ class CroatianKGProcessor:
         # ako dode do greske, except vraca []
         try:
             time.sleep(1)
-            results = sparql.query().convert()
+            results = self._query_with_retry(sparql)
             
             # dohvacanje vrijednosti varijabli
             for result in results["results"]["bindings"]:
@@ -387,6 +410,7 @@ class CroatianKGProcessor:
                 # stvaranje RDF trojki
                 self.triples.append((institut, svojstvo, vrijednost))
                 self.entities.add(institut)
+                self.entity_types[institut] = "institut"
                 self.entities.add(vrijednost)
                 self.relations.add(svojstvo)
                 
@@ -442,7 +466,7 @@ class CroatianKGProcessor:
         # ako dode do greske, except vraca []
         try:
             time.sleep(1)
-            results = sparql.query().convert()
+            results = self._query_with_retry(sparql)
             
             # dohvacanje vrijednosti varijabli
             for result in results["results"]["bindings"]:
@@ -457,6 +481,7 @@ class CroatianKGProcessor:
                 # stvaranje RDF trojki
                 self.triples.append((festival, svojstvo, vrijednost))
                 self.entities.add(festival)
+                self.entity_types[festival] = "festival"
                 self.entities.add(vrijednost)
                 self.relations.add(svojstvo)
                 
@@ -512,7 +537,7 @@ class CroatianKGProcessor:
         # ako dode do greske, except vraca []
         try:
             time.sleep(1)
-            results = sparql.query().convert()
+            results = self._query_with_retry(sparql)
             
             # dohvacanje vrijednosti varijabli
             for result in results["results"]["bindings"]:
@@ -527,6 +552,7 @@ class CroatianKGProcessor:
                 # stvaranje RDF trojki
                 self.triples.append((bastina, svojstvo, vrijednost))
                 self.entities.add(bastina)
+                self.entity_types[bastina] = "unesco_bastina"
                 self.entities.add(vrijednost)
                 self.relations.add(svojstvo)
                 
@@ -582,7 +608,7 @@ class CroatianKGProcessor:
         # ako dode do greske, except vraca []
         try:
             time.sleep(1)
-            results = sparql.query().convert()
+            results = self._query_with_retry(sparql)
             
             # dohvacanje vrijednosti varijabli
             for result in results["results"]["bindings"]:
@@ -597,6 +623,7 @@ class CroatianKGProcessor:
                 # stvaranje RDF trojki
                 self.triples.append((knjiga, svojstvo, vrijednost))
                 self.entities.add(knjiga)
+                self.entity_types[knjiga] = "knjiga"
                 self.entities.add(vrijednost)
                 self.relations.add(svojstvo)
                 
@@ -688,7 +715,7 @@ class CroatianKGProcessor:
             # Wikidata ima limit koliko upita u sekundi moze primiti
             # time.sleep() napravi pauzu da se Wikidata ne preoptereti upitima i da ne dode do gresaka/crashanja
             time.sleep(1)
-            results = sparql.query().convert()
+            results = self._query_with_retry(sparql)
             
             # dohvacanje vrijednosti varijabli
             for result in results["results"]["bindings"]:
@@ -703,6 +730,7 @@ class CroatianKGProcessor:
                 # stvaranje RDF trojki
                 self.triples.append((umjetnost, svojstvo, vrijednost))
                 self.entities.add(umjetnost)
+                self.entity_types[umjetnost] = "glazba_scena"
                 self.entities.add(vrijednost)
                 self.relations.add(svojstvo)
                 
@@ -758,7 +786,7 @@ class CroatianKGProcessor:
         # ako dode do greske, except vraca []
         try:
             time.sleep(1)
-            results = sparql.query().convert()
+            results = self._query_with_retry(sparql)
             
             # dohvacanje vrijednosti varijabli
             for result in results["results"]["bindings"]:
@@ -773,6 +801,7 @@ class CroatianKGProcessor:
                 # stvaranje RDF trojki
                 self.triples.append((npark, svojstvo, vrijednost))
                 self.entities.add(npark)
+                self.entity_types[npark] = "nacionalni_park"
                 self.entities.add(vrijednost)
                 self.relations.add(svojstvo)
                 
@@ -827,7 +856,7 @@ class CroatianKGProcessor:
         # ako dode do greske, except vraca []
         try:
             time.sleep(1)
-            results = sparql.query().convert()
+            results = self._query_with_retry(sparql)
             
             # dohvacanje vrijednosti varijabli
             for result in results["results"]["bindings"]:
@@ -842,6 +871,7 @@ class CroatianKGProcessor:
                 # stvaranje RDF trojki
                 self.triples.append((otok, svojstvo, vrijednost))
                 self.entities.add(otok)
+                self.entity_types[otok] = "otok"
                 self.entities.add(vrijednost)
                 self.relations.add(svojstvo)
                 
@@ -894,7 +924,7 @@ class CroatianKGProcessor:
         # ako dode do greske, except vraca []
         try:
             time.sleep(1)
-            results = sparql.query().convert()
+            results = self._query_with_retry(sparql)
             
             # dohvacanje vrijednosti varijabli
             for result in results["results"]["bindings"]:
@@ -909,6 +939,7 @@ class CroatianKGProcessor:
                 # stvaranje RDF trojki
                 self.triples.append((rijeka, svojstvo, vrijednost))
                 self.entities.add(rijeka)
+                self.entity_types[rijeka] = "rijeka"
                 self.entities.add(vrijednost)
                 self.relations.add(svojstvo)
                 
@@ -963,7 +994,7 @@ class CroatianKGProcessor:
         # ako dode do greske, except vraca []
         try:
             time.sleep(1)
-            results = sparql.query().convert()
+            results = self._query_with_retry(sparql)
             
             # dohvacanje vrijednosti varijabli
             for result in results["results"]["bindings"]:
@@ -978,6 +1009,7 @@ class CroatianKGProcessor:
                 # stvaranje RDF trojki
                 self.triples.append((planina, svojstvo, vrijednost))
                 self.entities.add(planina)
+                self.entity_types[planina] = "planina"
                 self.entities.add(vrijednost)
                 self.relations.add(svojstvo)
                 
@@ -1080,6 +1112,15 @@ class CroatianKGProcessor:
         name = name.replace(' ', '_')           # mijenjanje razmake s underscoreom (zbog prakticnosti)
         
         return name
+
+    # clean_name funkcija ponekad vrati prazan string - ova funkcija uklanja takve trojke
+    def clean_empty_entries(self):
+        triples_number_before = len(self.triples)
+        self.triples = [(s, p, o) for s, p, o in self.triples if s and o]
+        self.entities.discard("")
+        self.relations.discard("")
+        removed_triples_number = triples_number_before - len(self.triples)
+        self.logger.info(f"Uklonjeno {removed_triples_number} trojki s praznim vrijednostima")
     
     ###############################################################################################################################
 
@@ -1091,6 +1132,7 @@ class CroatianKGProcessor:
         self.triples = []
         self.entities = set()
         self.relations = set()
+        self.entity_types = {}
         
         # izvlacenje razlicitih tipova podataka s manjim limitima i pauzama
         self.extract_croatian_cities(limit=150)
@@ -1156,7 +1198,8 @@ class CroatianKGProcessor:
             self.extract_croatian_mountains(limit=50)  # smanjen limit
         except Exception as e:
             self.logger.warning(f"Preskacemo planine zbog greske: {str(e)}")
-        
+
+        self.clean_empty_entries()        
         self.logger.info(f"Ukupno izvuceno {len(self.triples)} trojki")
     
     # mapiranje entiteta/relacija i ID-jeva
@@ -1167,18 +1210,61 @@ class CroatianKGProcessor:
         self.id2relation = {i: relation for relation, i in self.relation2id.items()}
         
         self.logger.info(f"Kreirano {len(self.entities)} entiteta i {len(self.relations)} relacija")
+
+    # radi backup postojeceg filea uz provjeru da novi file nije prazan/manji
+    # ako je sigurno za pisati u file vraca True, inace False
+    def _backup_and_guard(self, path: str, new_item_count: int, min_ratio: float = 0.5) -> bool:
+        # nema stare datoteke - moze se pisati
+        if os.path.exists(path):
+            return True
+        
+        with open(path, 'r', encoding='utf-8') as f:
+            old_count = sum(1 for _ in f)
+        backup_path = path.replace(
+            os.path.splitext(path)[1],
+            f"_backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}{os.path.splitext(path)[1]}"
+        )
+        shutil.copy2(path, backup_path)
+        self.logger.info(f"Backup napravljen: {backup_path}")
+
+        if new_item_count == 0:
+            self.logger.error(f"ABORT pisanja u {path}: nova verzija je prazna.")
+            return False
+        if old_count > 0 and new_item_count < old_count * min_ratio:
+            self.logger.error(
+                f"ABORT pisanja u {path}: novo ({new_item_count}) puno manje od postojeceg ({old_count}). Provjeri rucno prije ponovnog pokretanja."
+            )
+            return False
+        return True
+
+    # mergea entity_types.json koji je od prije i trenutni self.entity_types umjesto da resetira
+    def _merge_entity_types(self, path: str) -> dict:
+        if os.path.exists(path):
+            with open(path, 'r', encoding='utf-8') as f:
+                old_types = json.load(f)
+        else:
+            old_types = {}
+        merged = dict(old_types)
+        merged.update(self.entity_types)  # novi tipovi nadopisuju/dodaju, stari ostaju ako nema novog
+        return merged
     
     # spremanje podataka u datoteke
-    def save_to_files(self, output_dir: str = "../../data/processed/"):
+    def save_to_files(self, output_dir: str = None):
         try:
+            if output_dir is None:
+                base_dir = os.path.dirname(os.path.abspath(__file__))
+                output_dir = os.path.join(base_dir, "..", "..", "data", "processed")
             output_dir = os.path.abspath(output_dir)
             os.makedirs(output_dir, exist_ok=True) # stvara direktorij ako ga nema
         
-            # spremanje trojki
+            # spremanje trojki (uz backup + guard)
             triples_path = os.path.join(output_dir, "croatian_triples.txt")
-            with open(triples_path, 'w', encoding='utf-8') as f:
-                for s, p, o in self.triples:
-                    f.write(f"{s}\t{p}\t{o}\n")
+            if self._backup_and_guard(triples_path, len(self.triples)):
+                with open(triples_path, 'w', encoding='utf-8') as f:
+                    for s, p, o in self.triples:
+                        f.write(f"{s}\t{p}\t{o}\n")
+            else:
+                self.logger.warning("croatian_triples.txt NIJE prepisan zbog guarda.")
         
             # spremanje mapiranja
             entity_path = os.path.join(output_dir, "entity2id.json")
@@ -1196,7 +1282,17 @@ class CroatianKGProcessor:
                 "num_relations": len(self.relations),
                 "sample_triples": self.triples[:10]
             }
-        
+
+            # spremanje tipova entiteta (grad, rijeka itd.) - merge, nikad reset na {}
+            types_path = os.path.join(output_dir, "entity_types.json")
+            if os.path.exists(types_path):
+                shutil.copy2(types_path, types_path.replace(
+                    ".json", f"_backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"))
+            merged_types = self._merge_entity_types(types_path)
+            with open(types_path, "w", encoding="utf-8") as f:
+                json.dump(merged_types, f, ensure_ascii=False, indent=2)
+
+            # spremanje statistika
             stats_path = os.path.join(output_dir, "stats.json")
             with open(stats_path, 'w', encoding='utf-8') as f:
                 json.dump(stats, f, ensure_ascii=False, indent=2)
