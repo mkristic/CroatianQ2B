@@ -115,6 +115,22 @@ Otvara lokalno web sučelje gdje se za zadani upit prikazuje i točan odgovor iz
 
 ---
 
+### Rezultati
+Evaluacija na test skupu (opisano u `evaluate.py`; npr. nasumično pogađanje na grafu od ~550 entiteta daje MRR ≈ 0.011):
+
+| Tip upita | n | MRR | Hits@1 | Hits@3 | Hits@10 |
+|---|---|---|---|---|---|
+| 1p | 33 | 0.248 | 0.212 | 0.242 | 0.333 |
+| 2p | 3 | 0.113 | 0.000 | 0.333 | 0.333 |
+| 2i | 31 | 0.584 | 0.548 | 0.548 | 0.742 |
+| n - broj upita; MRR - mean reciprocal rank = 1/rank (rank je položaj točnog odgovora na listi koju je model sastavio t. d. sortira odgovore od najmanje vjerojatnog do najvjerojatnijeg); Hits@1 - postotak upita gdje je točan odgovor bio TOČNO na 1. mjestu; Hits@3 - postotak upita gdje je točan odgovor bio negdje u prva 3; Hits@10 - analogno |
+
+Napomena o 2p: dataset sadrži samo 3 test primjera za ovaj tip upita (posljedica rijetkosti pronađenih 2-hop lanaca u grafu ove veličine) pa se ne može pouzdano iz ovoga zaključiti koliko učinkovito model radi s 2p upitima.
+
+Opažanje: Iako je 2i strukturno složeniji upit od 1p, model bolje rangira odgovore na 2i upite nego 1p. Moguće objašnjenje: relacije s velikim brojem različitih izlaznih vrijednosti (npr. za entitet X (grad) i relaciju 'drzava', odgovor je uvijek 'Hrvatska'; analogno za institucije, festivale itd.) vode do iste vrijednosti. Za model je to "teško" jer mora precizno naučiti razlikovati te situacije kako bi znao točan odgovor za svaki specifični upit (a teško je jer je odgovor isti za jako puno različtih upita). S druge strane, kod 2i upita kombinacijom dvaju 1p upita kod kojih nema toliko velikog broja istih odgovora za puno različitih upita (npr. zanimanje = novinar I zanimanje = odvjetnik) daje manji broj kandidata, čijim presjekom se dodatno sužava broj mogućih odgovora. To je za model "lakše" da pogodi pravi jer se presjekom eliminira većina pogrešnih kandidata. -> princip box embeddinga i pokazatelj da model radi
+
+---
+
 ### Ograničenja
 - Nestabilnost Wikidata Query Servicea (WDQS) - Wikidata prolazi migraciju backenda te zbog toga pozivi na bazu mogu biti neuspješni - WDQS vraća HTTP greške 429, 502 i 509. Zbog toga 2 od 13 planiranih entiteta nisu dohvaćeni. \
  Izvor: [Wikidata:SPARQL query service/WDQS backend update](https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/WDQS_backend_update).
