@@ -123,7 +123,13 @@ Evaluacija na test skupu (opisano u `evaluate.py`; npr. nasumično pogađanje na
 | 1p | 33 | 0.248 | 0.212 | 0.242 | 0.333 |
 | 2p | 3 | 0.113 | 0.000 | 0.333 | 0.333 |
 | 2i | 31 | 0.584 | 0.548 | 0.548 | 0.742 |
-| n - broj upita; MRR - mean reciprocal rank = 1/rank (rank je položaj točnog odgovora na listi koju je model sastavio t. d. sortira odgovore od najmanje vjerojatnog do najvjerojatnijeg); Hits@1 - postotak upita gdje je točan odgovor bio TOČNO na 1. mjestu; Hits@3 - postotak upita gdje je točan odgovor bio negdje u prva 3; Hits@10 - analogno |
+
+Objašnjenje stupaca tablice:  \
+ n - broj upita  \
+ MRR - mean reciprocal rank = 1/rank (rank je položaj točnog odgovora na listi koju je model sastavio t. d. sortira odgovore od najmanje vjerojatnog do najvjerojatnijeg)  \
+ Hits@1 - postotak upita gdje je točan odgovor bio TOČNO na 1. mjestu  \
+ Hits@3 - postotak upita gdje je točan odgovor bio negdje u prva 3  \
+ Hits@10 - analogno 
 
 Napomena o 2p: dataset sadrži samo 3 test primjera za ovaj tip upita (posljedica rijetkosti pronađenih 2-hop lanaca u grafu ove veličine) pa se ne može pouzdano iz ovoga zaključiti koliko učinkovito model radi s 2p upitima.
 
