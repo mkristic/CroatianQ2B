@@ -171,8 +171,8 @@ def format_display_names(value):
 # - entiteti i relacije mogu se odabrati iz dropdowna
 # - entiteti se mogu upisati i rucno
 # - formatiranje naziva: zamjena undersocrea s razmakom, sortiranje dropdown opcija
-entity1_choices = []
-entity2_choices = []
+subject_choices = []
+object_choices = []
 relation_choices = [(r.replace("_", " "), r) for r in sorted(relation2id.keys())] # za dropdown selection relacija
 
 with open(TRIPLES_PATH, "r", encoding="utf-8") as f:
@@ -180,16 +180,34 @@ with open(TRIPLES_PATH, "r", encoding="utf-8") as f:
         parts = line.strip().split("\t")
 
         if len(parts) == 3:
-            entity1 = format_display_names(parts[0])
-            entity2 = format_display_names(parts[2])
+            subject_option = (format_display_names(parts[0]), parts[0]) # (display name, stored name)
+            object_option = (format_display_names(parts[2]), parts[2])
 
-            if entity1 not in entity1_choices:
-                entity1_choices.append(entity1)
-            if entity2 not in entity2_choices:
-                entity2_choices.append(entity2)
+            if subject_option not in subject_choices:
+                subject_choices.append(subject_option)
+            if object_option not in object_choices:
+                object_choices.append(object_option)
 
-entity1_choices.sort()
-entity2_choices.sort()
+subject_choices.sort()
+object_choices.sort()
+
+# za 2i
+# ako se odabere 2i upit, prvi input se bira medu objektima; inace (1p, 2p) medu subjektima
+def update_first_entity(query_type):
+    if query_type == "2i":
+        choices = object_choices
+        label = "Entitet 1 (vrijednost svojstva za 2i upit)"
+    else:
+        choices = subject_choices
+        label = "Entitet 1 (sidrena vrijednost za 1p/2p)"
+
+    return gr.Dropdown(
+        choices=choices,
+        label=label,
+        value=None,
+        allow_custom_value=True,
+        elem_classes="input-field"
+    )
 
 ###############################################################################################################################
 # SUCELJE
@@ -204,7 +222,7 @@ CSS_PATH = os.path.join(BASE_DIR, "style.css")
 with open(CSS_PATH, encoding="utf-8") as f:
     css = f.read()
 
-with gr.Blocks(title="Croatian Query2Box", css=css, theme=theme) as demo:
+with gr.Blocks(title="Croatian Query2Box") as demo:
     # ako browser u kojemu se otvori app ima postavljen dark theme, boje postavljene u app-u i dark theme ce se clashati
     # ovo postavlja light temu za app
     demo.load(
@@ -231,7 +249,7 @@ with gr.Blocks(title="Croatian Query2Box", css=css, theme=theme) as demo:
     with gr.Row(elem_classes="input-row"):
         e1 = gr.Dropdown(
             label="Entitet 1 (sidrena vrijednost za 1p/2p)", 
-            choices=entity1_choices, 
+            choices=subject_choices, 
             value=None,              
             allow_custom_value=True,
             elem_classes="input-field") 
@@ -244,7 +262,7 @@ with gr.Blocks(title="Croatian Query2Box", css=css, theme=theme) as demo:
     with gr.Row(elem_classes="input-row"):
         e2 = gr.Dropdown(
             label="Entitet 2 (samo za 2i)", 
-            choices=entity2_choices, 
+            choices=object_choices, 
             value=None,              
             allow_custom_value=True,
             elem_classes="input-field")
@@ -276,13 +294,19 @@ with gr.Blocks(title="Croatian Query2Box", css=css, theme=theme) as demo:
         outputs=[nl_output, graph_output, model_output],
     )
 
+    # ažuriranje dropdown selectiona za prvi entitet kada se odabere 2i upit
+    qtype.change(
+        fn=update_first_entity,
+        inputs=[qtype],
+        outputs=[e1]
+    )
+
     gr.Markdown(
         "Napomena:  " \
-        "\nNazivi entiteta/relacija moraju odgovarati onima u croatian_triples.txt (bez dijakritika, razmak -> underscore).  " \
         "\nPrimjer 1p upita: Entitet 1 = 'Zagreb', Relacija 1 = 'postanski_broj'.  "
         "\nPrimjer 2p upita: Entitet 1 = 'Stjepan_Mesic', Relacija 1 = 'mjesto rodjenja', Relacija 2 = 'postanski broj'.  "
         "\nPrimjer 2i upita: (Entitet 1 = 'pisac' = Relacija 1 = 'zanimanje') I (Entitet 2 = 'novinar' = Relacija 2 = 'zanimanje')."
     )
 
 if __name__ == "__main__":
-    demo.launch()
+    demo.launch(css=css, theme=theme)
