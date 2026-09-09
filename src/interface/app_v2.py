@@ -191,23 +191,61 @@ with open(TRIPLES_PATH, "r", encoding="utf-8") as f:
 subject_choices.sort()
 object_choices.sort()
 
-# za 2i
+# definiranje atributa dropdowna ovisno o tipu upita
 # ako se odabere 2i upit, prvi input se bira medu objektima; inace (1p, 2p) medu subjektima
-def update_first_entity(query_type):
-    if query_type == "2i":
-        choices = object_choices
-        label = "Entitet 1 (vrijednost svojstva za 2i upit)"
-    else:
+def update_query_fields(query_type):
+    if query_type == "1p":
         choices = subject_choices
-        label = "Entitet 1 (sidrena vrijednost za 1p/2p)"
+        entity_label = "Entitet"
+        relation_label = "Svojstvo"
+        second_relation_label = "Druga relacija"
 
-    return gr.Dropdown(
+    elif query_type == "2p":
+        choices = subject_choices
+        entity_label = "Početni entitet"
+        relation_label = "Prva relacija" 
+        second_relation_label = "Druga relacija"
+        
+    else:
+        choices = object_choices
+        entity_label = "Vrijednost prvog uvjeta"
+        relation_label = "Svojstvo prvog uvjeta"
+        second_relation_label = "Svojstvo drugog uvjeta"
+
+    first_entity = gr.Dropdown(
         choices=choices,
-        label=label,
+        label=entity_label,
         value=None,
         allow_custom_value=True,
         elem_classes="input-field"
     )
+    first_relation = gr.Dropdown(
+        label=relation_label,
+        choices=relation_choices,
+        value=None,
+        elem_classes="input-field"
+    )
+    second_entity = gr.Dropdown(
+        label="Vrijednost drugog uvjeta",
+        choices=object_choices,
+        value=None,
+        allow_custom_value=True,
+        elem_classes="input-field",
+        visible=query_type == "2i" # samo za 2i upite ce bit vidljiv
+    )
+    second_relation = gr.Dropdown(
+        label=second_relation_label,
+        choices=relation_choices,
+        value=None,
+        elem_classes="input-field",
+        visible=query_type != "1p" # vidljivo samo za 2p i 2i upite
+    )
+
+     # ovo je vidljivo za 2p i 2i upite, ali je napravljeno iskljucivo da bi za odabrani 2p upit, gr.Row s relacijama bili jedno ispod drugog
+     # (za 2p ce bit nevidljivo)
+    row_update = gr.Row(visible=query_type != "1p")
+
+    return first_entity, first_relation, second_entity, second_relation, row_update
 
 ###############################################################################################################################
 # SUCELJE
@@ -246,31 +284,38 @@ with gr.Blocks(title="Croatian Query2Box") as demo:
 
     qtype = gr.Radio(["1p", "2p", "2i"], value="1p", label="Tip logičkog upita")
 
+    # inicijalni izgled input polja (kad se app tek otvori)
     with gr.Row(elem_classes="input-row"):
-        e1 = gr.Dropdown(
-            label="Entitet 1 (sidrena vrijednost za 1p/2p)", 
-            choices=subject_choices, 
-            value=None,              
-            allow_custom_value=True,
-            elem_classes="input-field") 
-        r1 = gr.Dropdown(
-            label="Relacija 1", 
+        with gr.Column(scale=1, min_width=160):
+            e1 = gr.Dropdown(
+                label="Entitet", 
+                choices=subject_choices, 
+                value=None,              
+                allow_custom_value=True,
+                elem_classes="input-field") 
+        with gr.Column(scale=1, min_width=160):
+            r1 = gr.Dropdown(
+            label="Svojstvo", 
             choices=relation_choices, 
             value=None, 
             elem_classes="input-field")
 
-    with gr.Row(elem_classes="input-row"):
-        e2 = gr.Dropdown(
-            label="Entitet 2 (samo za 2i)", 
-            choices=object_choices, 
-            value=None,              
-            allow_custom_value=True,
-            elem_classes="input-field")
-        r2 = gr.Dropdown(
-            label="Relacija 2 (za 2p i 2i)", 
-            choices=relation_choices, 
-            value=None, 
-            elem_classes="input-field")
+    with gr.Row(elem_classes="input-row", visible=False) as second_row:
+        with gr.Column(scale=1, min_width=160):
+            e2 = gr.Dropdown(
+                label="Vrijednost drugog uvjeta", 
+                choices=object_choices, 
+                value=None,              
+                allow_custom_value=True,
+                elem_classes="input-field",
+                visible=False)
+        with gr.Column(scale=1, min_width=160):
+            r2 = gr.Dropdown(
+                label="Druga relacija", 
+                choices=relation_choices, 
+                value=None, 
+                elem_classes="input-field",
+                visible=False)
 
     with gr.Row(elem_id="button-row"):
         clear_btn = gr.ClearButton(
@@ -294,11 +339,11 @@ with gr.Blocks(title="Croatian Query2Box") as demo:
         outputs=[nl_output, graph_output, model_output],
     )
 
-    # ažuriranje dropdown selectiona za prvi entitet kada se odabere 2i upit
+    # ažuriranje dropdown selectiona kad se promijeni tip upita
     qtype.change(
-        fn=update_first_entity,
+        fn=update_query_fields,
         inputs=[qtype],
-        outputs=[e1]
+        outputs=[e1, r1, e2, r2, second_row]
     )
 
     gr.Markdown(
