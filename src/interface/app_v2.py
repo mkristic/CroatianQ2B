@@ -110,11 +110,18 @@ def model_predictions(qtype, e1, r1, e2, r2, top_k=5):
 ###############################################################################################################################
 # spaja oba nacina odgovaranja za Gradio callback
 
+def join_words_with_underscores(value):
+    if value is None:
+        value = ""
+    words = value.split()
+    return "_".join(words)
+    
+
 def answer_query(qtype, e1, r1, e2, r2):
-    e1 = e1.strip() if e1 else ""
-    r1 = r1.strip() if r1 else ""
-    e2 = e2.strip() if e2 else ""
-    r2 = r2.strip() if r2 else ""
+    e1 = join_words_with_underscores(e1.strip()) if e1 else ""
+    r1 = join_words_with_underscores(r1.strip()) if r1 else ""
+    e2 = join_words_with_underscores(e2.strip()) if e2 else ""  
+    r2 = join_words_with_underscores(r2.strip()) if r2 else ""
 
     nl, graph_answers = graph_lookup_answer(qtype, e1, r1, e2, r2)
 
