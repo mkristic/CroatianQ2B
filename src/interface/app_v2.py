@@ -181,13 +181,27 @@ with gr.Blocks(title="Croatian Query2Box", css=css, theme=theme) as demo:
 
     qtype = gr.Radio(["1p", "2p", "2i"], value="1p", label="Tip logičkog upita")
 
-    relation_choices = [(r.replace("_", " "), r) for r in sorted(relation2id.keys())] # za dropdown selection
-    entity_choices = [(e.replace("_", " "), e) for e in sorted(entity2id.keys())] ##!
+    relation_choices = [(r.replace("_", " "), r) for r in sorted(relation2id.keys())] # za dropdown selection relacija
+    entity1_choices = []
+    entity2_choices = []
+
+    with open(TRIPLES_PATH, "r", encoding="utf-8") as f:
+        for line in f:
+            parts = line.strip().split("\t")
+
+            if len(parts) == 3:
+                entity1_choices.append(to_display(parts[0]))
+                entity2_choices.append(to_display(parts[2]))
+
+    entity1_choices.sort()
+    entity2_choices.sort()
+
+    #entity_choices = [(e.replace("_", " "), e) for e in sorted(entity2id.keys())] ##!
 
     with gr.Row(elem_classes="input-row"):
         e1 = gr.Dropdown(
             label="Entitet 1 (sidrena vrijednost za 1p/2p)", 
-            choices=entity_choices, 
+            choices=entity1_choices, 
             value=None,              
             allow_custom_value=True,
             elem_classes="input-field") 
@@ -200,7 +214,7 @@ with gr.Blocks(title="Croatian Query2Box", css=css, theme=theme) as demo:
     with gr.Row(elem_classes="input-row"):
         e2 = gr.Dropdown(
             label="Entitet 2 (samo za 2i)", 
-            choices=entity_choices, 
+            choices=entity2_choices, 
             value=None,              
             allow_custom_value=True,
             elem_classes="input-field")
