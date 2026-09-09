@@ -110,18 +110,32 @@ def model_predictions(qtype, e1, r1, e2, r2, top_k=5):
 ###############################################################################################################################
 # spaja oba nacina odgovaranja za Gradio callback
 
+# spaja sve rijeci entiteta/relacija underscoreom kao sto je u clean_name() u croatian_kg_processor.py
 def join_words_with_underscores(value):
     if value is None:
         value = ""
     words = value.split()
     return "_".join(words)
+
+# za unos entiteta/relacija u lowercaseu - pretvara sve unose u mala slova i usporeduje s onim u entity2id i relation2id
+# (inace je unos malim slovima vracao da nema pronadenih odgovora u grafu)
+def compare_input_with_stored(input_value, stored_names):
+    input_value = join_words_with_underscores(input_value)
+
+    if input_value in stored_names: # ako se unos vec nalazi negdje spremljeno u _2id tako kako je uneseno -> ok
+        return input_value
+
+    for stored_name in stored_names: 
+        if input_value.lower() == stored_name.lower(): 
+            return stored_name
+    return input_value
     
 
 def answer_query(qtype, e1, r1, e2, r2):
-    e1 = join_words_with_underscores(e1.strip()) if e1 else ""
-    r1 = join_words_with_underscores(r1.strip()) if r1 else ""
-    e2 = join_words_with_underscores(e2.strip()) if e2 else ""  
-    r2 = join_words_with_underscores(r2.strip()) if r2 else ""
+    e1 = compare_input_with_stored(e1, entity2id) if e1 else ""
+    r1 = compare_input_with_stored(r1, relation2id) if r1 else ""
+    e2 = compare_input_with_stored(e2, entity2id) if e2 else ""  
+    r2 = compare_input_with_stored(r2, relation2id) if r2 else ""
 
     nl, graph_answers = graph_lookup_answer(qtype, e1, r1, e2, r2)
 
