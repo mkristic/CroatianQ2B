@@ -182,14 +182,33 @@ with gr.Blocks(title="Croatian Query2Box", css=css, theme=theme) as demo:
     qtype = gr.Radio(["1p", "2p", "2i"], value="1p", label="Tip logičkog upita")
 
     relation_choices = [(r.replace("_", " "), r) for r in sorted(relation2id.keys())] # za dropdown selection
+    entity_choices = [(e.replace("_", " "), e) for e in sorted(entity2id.keys())] ##!
 
     with gr.Row(elem_classes="input-row"):
-        e1 = gr.Textbox(label="Entitet 1 (sidrena vrijednost za 1p/2p)", elem_classes="input-field")
-        r1 = gr.Dropdown(label="Relacija 1", choices=relation_choices, value=None, elem_classes="input-field")
+        e1 = gr.Dropdown(
+            label="Entitet 1 (sidrena vrijednost za 1p/2p)", 
+            choices=entity_choices, 
+            value=None,              
+            allow_custom_value=True,
+            elem_classes="input-field") 
+        r1 = gr.Dropdown(
+            label="Relacija 1", 
+            choices=relation_choices, 
+            value=None, 
+            elem_classes="input-field")
 
     with gr.Row(elem_classes="input-row"):
-        e2 = gr.Textbox(label="Entitet 2 (samo za 2i)", elem_classes="input-field")
-        r2 = gr.Dropdown(label="Relacija 2 (za 2p i 2i)", choices=relation_choices, value=None, elem_classes="input-field")
+        e2 = gr.Dropdown(
+            label="Entitet 2 (samo za 2i)", 
+            choices=entity_choices, 
+            value=None,              
+            allow_custom_value=True,
+            elem_classes="input-field")
+        r2 = gr.Dropdown(
+            label="Relacija 2 (za 2p i 2i)", 
+            choices=relation_choices, 
+            value=None, 
+            elem_classes="input-field")
 
     with gr.Row(elem_id="button-row"):
         clear_btn = gr.ClearButton(
