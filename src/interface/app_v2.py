@@ -43,7 +43,7 @@ model.eval()
 # formatiranje stringova za ispis
 # - ako se radi o datumu: vratit ce dd. mm. yyyy. umjesto generickog datetime formata
 # - ako je viseclani naziv razdvojen underscoreom (definirano s clean_name() u croatian_kg_processor.py), umjesto underscore ispisuje razmak
-def to_display(value):
+def format_display_names(value):
     if isinstance(value, str) and value:
             try:
                 date = datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ")
@@ -62,7 +62,7 @@ def graph_lookup_answer(qtype, e1, r1, e2, r2):
         if not e1 or not r1:
             return None, "Unesite entitet i relaciju za 1p upit."
         answers = generator.objects.get((e1, r1), set())
-        nl = f"Koji je entitet povezan s entitetom '{to_display(e1)}' relacijom '{to_display(r1)}'?"
+        nl = f"Koji je entitet povezan s entitetom '{format_display_names(e1)}' relacijom '{format_display_names(r1)}'?"
 
     elif qtype == "2p":
         if not e1 or not r1 or not r2:
@@ -70,7 +70,7 @@ def graph_lookup_answer(qtype, e1, r1, e2, r2):
         intermediates = generator.objects.get((e1, r1), set())
         answers = generator.project(intermediates, r2)
         answers.discard(e1)
-        nl = f"Krenuvsi od entiteta '{to_display(e1)}' preko relacije '{to_display(r1)}' i relacije '{to_display(r2)}', koji je entitet na kraju?"
+        nl = f"Krenuvsi od entiteta '{format_display_names(e1)}' preko relacije '{format_display_names(r1)}' i relacije '{format_display_names(r2)}', koji je entitet na kraju?"
 
     elif qtype == "2i":
         if not e1 or not r1 or not e2 or not r2:
@@ -78,7 +78,7 @@ def graph_lookup_answer(qtype, e1, r1, e2, r2):
         s1 = generator.subjects.get((r1, e1), set())
         s2 = generator.subjects.get((r2, e2), set())
         answers = s1 & s2
-        nl = f"Koji entitet zadovoljava '{to_display(r1)}' = '{to_display(e1)}' I '{to_display(r2)}' = '{to_display(e2)}'?"
+        nl = f"Koji entitet zadovoljava '{format_display_names(r1)}' = '{format_display_names(e1)}' I '{format_display_names(r2)}' = '{format_display_names(e2)}'?"
 
     else:
         return None, "Tip upita nije odgovarajuć."
@@ -114,7 +114,7 @@ def model_predictions(qtype, e1, r1, e2, r2, top_k=5):
     for idx in sorted_indices:
         entity_name = id2entity[idx.item()]
         dist = distances[idx].item()
-        lines.append(f"- {to_display(entity_name)}  (udaljenost: {dist:.3f})")
+        lines.append(f"- {format_display_names(entity_name)}  (udaljenost: {dist:.3f})")
 
     return "\n".join(lines)
 
@@ -137,7 +137,7 @@ def answer_query(qtype, e1, r1, e2, r2):
     if not graph_answers:
         graph_result = "Nema pronađenih odgovora u grafu."
     else:
-        graph_result = "\n".join(f"{to_display(a)}" for a in sorted(graph_answers))
+        graph_result = "\n".join(f"{format_display_names(a)}" for a in sorted(graph_answers))
 
     model_result = model_predictions(qtype, e1, r1, e2, r2)
 
@@ -190,8 +190,8 @@ with gr.Blocks(title="Croatian Query2Box", css=css, theme=theme) as demo:
             parts = line.strip().split("\t")
 
             if len(parts) == 3:
-                entity1 = to_display(parts[0])
-                entity2 = to_display(parts[2])
+                entity1 = format_display_names(parts[0])
+                entity2 = format_display_names(parts[2])
 
                 if entity1 not in entity1_choices:
                     entity1_choices.append(entity1)
