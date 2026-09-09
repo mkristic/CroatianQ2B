@@ -40,18 +40,6 @@ model = BoxEmbedding(
 model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
 model.eval()
 
-# formatiranje stringova za ispis
-# - ako se radi o datumu: vratit ce dd. mm. yyyy. umjesto generickog datetime formata
-# - ako je viseclani naziv razdvojen underscoreom (definirano s clean_name() u croatian_kg_processor.py), umjesto underscore ispisuje razmak
-def format_display_names(value):
-    if isinstance(value, str) and value:
-            try:
-                date = datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ")
-                return date.strftime("%d. %m. %Y.")
-            except ValueError:
-                return value.replace("_", " ")
-    return value
-
 ###############################################################################################################################
 # odgovor direktnom pretragom grafa (bazna linija) - vidi prijasnju verziju
 # za 1p i 2p: koristi se projekcija, e1 je sidreni entitet
@@ -143,6 +131,44 @@ def answer_query(qtype, e1, r1, e2, r2):
 
     return nl, graph_result, model_result
 
+###############################################################################################################################
+# DOHVACANJE PODATAKA ZA DROPDOWN SELECTION (ZA ENTITETE I RELACIJE) I FORMATIRANJE NJIHOVIH NAZIVA
+
+# formatiranje stringova 
+# - ako se radi o datumu: vratit ce dd. mm. yyyy. umjesto generickog datetime formata
+# - ako je viseclani naziv razdvojen underscoreom (definirano s clean_name() u croatian_kg_processor.py), umjesto underscore ispisuje razmak
+def format_display_names(value):
+    if isinstance(value, str) and value:
+            try:
+                date = datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ")
+                return date.strftime("%d. %m. %Y.")
+            except ValueError:
+                return value.replace("_", " ")
+    return value
+
+# za dropdown selection:
+# - entiteti i relacije mogu se odabrati iz dropdowna
+# - entiteti se mogu upisati i rucno
+# - formatiranje naziva: zamjena undersocrea s razmakom, sortiranje dropdown opcija
+entity1_choices = []
+entity2_choices = []
+relation_choices = [(r.replace("_", " "), r) for r in sorted(relation2id.keys())] # za dropdown selection relacija
+
+with open(TRIPLES_PATH, "r", encoding="utf-8") as f:
+    for line in f:
+        parts = line.strip().split("\t")
+
+        if len(parts) == 3:
+            entity1 = format_display_names(parts[0])
+            entity2 = format_display_names(parts[2])
+
+            if entity1 not in entity1_choices:
+                entity1_choices.append(entity1)
+            if entity2 not in entity2_choices:
+                entity2_choices.append(entity2)
+
+entity1_choices.sort()
+entity2_choices.sort()
 
 ###############################################################################################################################
 # SUCELJE
@@ -180,26 +206,6 @@ with gr.Blocks(title="Croatian Query2Box", css=css, theme=theme) as demo:
     gr.Markdown("---", elem_id="title-separator") # ravna linija ispod naslova da dijelovi app budu vizualno odijeljeni
 
     qtype = gr.Radio(["1p", "2p", "2i"], value="1p", label="Tip logičkog upita")
-
-    relation_choices = [(r.replace("_", " "), r) for r in sorted(relation2id.keys())] # za dropdown selection relacija
-    entity1_choices = []
-    entity2_choices = []
-
-    with open(TRIPLES_PATH, "r", encoding="utf-8") as f:
-        for line in f:
-            parts = line.strip().split("\t")
-
-            if len(parts) == 3:
-                entity1 = format_display_names(parts[0])
-                entity2 = format_display_names(parts[2])
-
-                if entity1 not in entity1_choices:
-                    entity1_choices.append(entity1)
-                if entity2 not in entity2_choices:
-                    entity2_choices.append(entity2)
-
-    entity1_choices.sort()
-    entity2_choices.sort()
 
     with gr.Row(elem_classes="input-row"):
         e1 = gr.Dropdown(
