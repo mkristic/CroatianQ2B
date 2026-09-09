@@ -190,13 +190,16 @@ with gr.Blocks(title="Croatian Query2Box", css=css, theme=theme) as demo:
             parts = line.strip().split("\t")
 
             if len(parts) == 3:
-                entity1_choices.append(to_display(parts[0]))
-                entity2_choices.append(to_display(parts[2]))
+                entity1 = to_display(parts[0])
+                entity2 = to_display(parts[2])
+
+                if entity1 not in entity1_choices:
+                    entity1_choices.append(entity1)
+                if entity2 not in entity2_choices:
+                    entity2_choices.append(entity2)
 
     entity1_choices.sort()
     entity2_choices.sort()
-
-    #entity_choices = [(e.replace("_", " "), e) for e in sorted(entity2id.keys())] ##!
 
     with gr.Row(elem_classes="input-row"):
         e1 = gr.Dropdown(
