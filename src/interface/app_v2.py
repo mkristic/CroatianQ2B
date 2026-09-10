@@ -354,4 +354,11 @@ with gr.Blocks(title="Croatian Query2Box") as demo:
     )
 
 if __name__ == "__main__":
-    demo.launch(css=css, theme=theme)
+    demo.launch(
+        server_name="127.0.0.1",
+        server_port=7860,
+        share=False,
+        inbrowser=False,
+        css=css,
+        theme=theme,
+    )
