@@ -347,10 +347,16 @@ with gr.Blocks(title="Croatian Query2Box") as demo:
     )
 
     gr.Markdown(
-        "Napomena:  " \
-        "\nPrimjer 1p upita: Entitet 1 = 'Zagreb', Relacija 1 = 'postanski_broj'.  "
-        "\nPrimjer 2p upita: Entitet 1 = 'Stjepan_Mesic', Relacija 1 = 'mjesto rodjenja', Relacija 2 = 'postanski broj'.  "
-        "\nPrimjer 2i upita: (Entitet 1 = 'pisac' = Relacija 1 = 'zanimanje') I (Entitet 2 = 'novinar' = Relacija 2 = 'zanimanje')."
+        "**Primjeri upita:**  " \
+        "\n**1p:**  " \
+        "\n\tEntitet = 'Zagreb', Svojstvo = 'postanski broj'  " \
+        "\n\tEntitet = 'Supetar', Svojstvo = 'nalazi se u'  "
+        "\n**2p:**  " \
+        "\nPočetni entitet = 'Stjepan Mesic', Prva relacija = 'mjesto rodjenja', Druga relacija = 'postanski broj'  " \
+        "\nPočetni entitet = 'Veleuciliste VERN'', Prva relacija = 'sjediste', Druga relacija = 'datum osnivanja'  "
+        "\n**2i:**  "
+        "\n(Vrijednost1 = 'pisac' = Svojstvo1 = 'zanimanje') I (Vrijednost2 = 'novinar' = Svojstvo2 = 'zanimanje')  "
+        "\n(Vrijednost1 = 'Kvarner' = Svojstvo1 = 'nalazi se u') I (Vrijednost2 = '405.78' = Svojstvo2 = 'povrsina')"
     )
 
 if __name__ == "__main__":
