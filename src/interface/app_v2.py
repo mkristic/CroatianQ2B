@@ -277,7 +277,7 @@ with gr.Blocks(title="Croatian Query2Box") as demo:
 
     gr.Markdown(
         "# Croatian Query2Box\n"
-        "Usporedba odgovora dobivenog direktnom pretragom grafa (bazna linija) i predikcija treniranog box-embedding modela.",
+        "Odgovori iz grafa znanja i predikcije Query2Box modela.",
         elem_id="main-title"
     )
     gr.Markdown("---", elem_id="title-separator") # ravna linija ispod naslova da dijelovi app budu vizualno odijeljeni
