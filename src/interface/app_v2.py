@@ -304,7 +304,7 @@ with gr.Blocks(title="Croatian Query2Box") as demo:
                     - **Desno** su predikcije modela dobivene na treniranim podacima.
                     Manji broj u predikciji znači da model daje prednost tom prijedlogu,
                     ali to ne mora biti točan odgovor. 
-                    - **"Nema pronađenih odgovora"** znači da u zbirci nema odgovarajućeg zapisa,
+                    - **"Nema pronađenih odgovora"** znači da u grafu znanju nema odgovora na zadano pitanje,
                     a ne da odgovor ne postoji u stvarnosti.
                     """)
 
