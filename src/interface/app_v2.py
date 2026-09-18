@@ -277,12 +277,63 @@ with gr.Blocks(title="Croatian Query2Box") as demo:
 
     gr.Markdown(
         "# Croatian Query2Box\n"
-        "Odgovori iz grafa znanja i predikcije Query2Box modela.",
+        "Odgovori iz grafa znanja i predikcije Query2Box modela",
         elem_id="main-title"
     )
+
+    with gr.Row(equal_height=False):
+        with gr.Column(scale=1, min_width=320):
+            with gr.Accordion("Kako se služiti aplikacijom", open=False):
+                gr.Markdown("""
+                    ### 1. Odaberite vrstu logičkog upita
+                    - **1p:** tražite jedno svojstvo (npr. poštanski broj grada)
+                    - **2p:** povezivanje dvaju svojstava (npr. mjesto rođenja osobe i zatim poštanski broj tog mjesta)
+                    - **2i:** tražite nekoga ili nešto što zadovoljava oba uvjeta (npr. osobu koja je po zanimanju i pisac i novinar)
+
+                    ### 2. Odaberite ili unesite podatke
+                    U padajućim izbornicima odaberite ponuđene nazive i svojstva (bez dijakritičkih znakova).
+                    Polje **Entitet** označava osobu, mjesto ili drugi pojam,
+                    a **Svojstvo** ili **Relacija** podatak koji ih opisuje ili povezuje s drugim pojmom.
+
+                    Kod **2i** upita odaberite dvije vrijednosti i njihova svojstva.
+                    Primjere za sve vrste pitanja pronaći ćete u izborniku
+                    **Primjeri upita**.
+
+                    ### Kako čitati rezultate?
+                    - **Lijevo** su odgovori pronađeni u pohranjenim podacima.
+                    - **Desno** su predikcije modela dobivene na treniranim podacima.
+                    Manji broj u predikciji znači da model daje prednost tom prijedlogu,
+                    ali to ne mora biti točan odgovor. 
+                    - **"Nema pronađenih odgovora"** znači da u zbirci nema odgovarajućeg zapisa,
+                    a ne da odgovor ne postoji u stvarnosti.
+                    """)
+
+        with gr.Column(scale=1, min_width=320):
+            with gr.Accordion("Primjeri upita", open=False):
+                gr.Markdown("""
+                    ### 1p: jedno svojstvo entiteta
+
+                    **Koji je datum rođenja Ivana Rakitića?**
+                    - Entitet: `Ivan Rakitic`
+                    - Svojstvo: `datum rodjenja`
+
+                    ### 2p: povezivanje dvaju svojstava 
+
+                    **Koji je poštanski broj mjesta rođenja Stjepana Mesića?**
+                    - Početni entitet: `Stjepan Mesic`
+                    - Prva relacija: `mjesto rodjenja`
+                    - Druga relacija: `postanski broj`
+
+                    ### 2i: dva uvjeta za isti entitet
+
+                    **Tko je istodobno pisac i novinar?**
+                    - Vrijednost prvog uvjeta: `pisac`; svojstvo: `zanimanje`
+                    - Vrijednost drugog uvjeta: `novinar`; svojstvo: `zanimanje`
+                    """)
+
     gr.Markdown("---", elem_id="title-separator") # ravna linija ispod naslova da dijelovi app budu vizualno odijeljeni
 
-    qtype = gr.Radio(["1p", "2p", "2i"], value="1p", label="Tip logičkog upita")
+    qtype = gr.Radio(["1p", "2p", "2i"], value="1p", label="Vrsta logičkog upita")
 
     # inicijalni izgled input polja (kad se app tek otvori)
     with gr.Row(elem_classes="input-row"):
@@ -344,19 +395,6 @@ with gr.Blocks(title="Croatian Query2Box") as demo:
         fn=update_query_fields,
         inputs=[qtype],
         outputs=[e1, r1, e2, r2, second_row]
-    )
-
-    gr.Markdown(
-        "**Primjeri upita:**  " \
-        "\n**1p:**  " \
-        "\n\tEntitet = 'Zagreb', Svojstvo = 'postanski broj'  " \
-        "\n\tEntitet = 'Supetar', Svojstvo = 'nalazi se u'  "
-        "\n**2p:**  " \
-        "\nPočetni entitet = 'Stjepan Mesic', Prva relacija = 'mjesto rodjenja', Druga relacija = 'postanski broj'  " \
-        "\nPočetni entitet = 'Veleuciliste VERN'', Prva relacija = 'sjediste', Druga relacija = 'datum osnivanja'  "
-        "\n**2i:**  "
-        "\n(Vrijednost1 = 'pisac' = Svojstvo1 = 'zanimanje') I (Vrijednost2 = 'novinar' = Svojstvo2 = 'zanimanje')  "
-        "\n(Vrijednost1 = 'Kvarner' = Svojstvo1 = 'nalazi se u') I (Vrijednost2 = '405.78' = Svojstvo2 = 'povrsina')"
     )
 
 if __name__ == "__main__":
