@@ -313,20 +313,20 @@ with gr.Blocks(title="Croatian Query2Box") as demo:
                 gr.Markdown("""
                     ### 1p: jedno svojstvo entiteta
 
-                    **Koji je datum rođenja Ivana Rakitića?**
+                    Koji je datum rođenja Ivana Rakitića?
                     - Entitet: `Ivan Rakitic`
                     - Svojstvo: `datum rodjenja`
 
                     ### 2p: povezivanje dvaju svojstava 
 
-                    **Koji je poštanski broj mjesta rođenja Stjepana Mesića?**
+                    Koji je poštanski broj mjesta rođenja Stjepana Mesića?
                     - Početni entitet: `Stjepan Mesic`
                     - Prva relacija: `mjesto rodjenja`
                     - Druga relacija: `postanski broj`
 
                     ### 2i: dva uvjeta za isti entitet
 
-                    **Tko je istodobno pisac i novinar?**
+                    Tko je istodobno pisac i novinar?
                     - Vrijednost prvog uvjeta: `pisac`; svojstvo: `zanimanje`
                     - Vrijednost drugog uvjeta: `novinar`; svojstvo: `zanimanje`
                     """)
